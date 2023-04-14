@@ -1,0 +1,17 @@
+---
+Language: Cpp
+IndentWidth: 4
+UseTab: Never
+AccessModifierOffset: -4
+AlignConsecutiveDeclarations: true
+BreakBeforeBraces: Linux
+BraceWrapping:
+  AfterFunction: true
+  AfterClass: true
+  AfterNamespace: true
+  AfterControlStatement: true
+  AfterEnum: true
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+...
+

@@ -1,31 +1,35 @@
 #include <stdio.h>
+
+#ifdef DEBUG
 #include <unistd.h>
-#include "../utils/arr_utils.h"
-#define RAND_RANGE 15
+#endif
 
-int binary_search(int *, int, int); 
-int binary_search_estimate(int *, int, int);
-int main() {
-    int len = 5;
-    int arr[len];
-
-    fill_random(arr, len, RAND_RANGE);
+void print_array(int *arr, int len);
+int  binary_search(int *, int, int);
+int  main()
+{
+    int len = 6;
+    int arr[] = {10, 17, 20, 28, 75, 86};
 
     printf("Here is the array: ");
     print_array(arr, len);
 
-    printf("What value would you like to search for? If it's not in "
-           "the array, I can tell you what index it would belong in :)\n");
+    printf("What value would you like to search for? ");
 
     int num;
     scanf("%d", &num);
-    
-    int index = binary_search_estimate(arr, len, num);
-    printf("%d should be located at index %d\n", num, index);
+
+    int index = binary_search(arr, len, num);
+
+    if (index == -1)
+        printf("%d isn't in the array!\n", num);
+    else
+        printf("arr[%d] = %d\n", index, num);
 }
 
-int binary_search(int *arr, int len, int num) {
-    int left  = 0;
+int binary_search(int *arr, int len, int num)
+{
+    int left = 0;
     int right = len;
     int mid_prev = -1;
     int mid = (left + right) / 2;
@@ -40,37 +44,28 @@ int binary_search(int *arr, int len, int num) {
         else
             right = mid;
 
-        sleep(1);
-
         mid_prev = mid;
         mid = (left + right) / 2;
+
+#ifdef DEBUG
+        printf("left = %d | right = %d | mid = %d | mid_prev = %d\n", left,
+               right, mid, mid_prev);
+        sleep(1);
+#endif
     }
-    return mid;
+
+    // nothing was found, return -1
+    return -1;
 }
 
-int binary_search_estimate(int *arr, int len, int num) {
-    int left  = 0;
-    int right = len;
-    int mid_prev = -1;
-    int mid = (left + right) / 2;
+void print_array(int *arr, int len)
+{
+    if (len < 1)
+        return;
 
-    while (left < right) {
-        printf("left: %d, right: %d, mid: %d\n", left, right, mid);
-
-        if (mid_prev == mid)
-            return arr[mid] > num ? mid + 2 : mid + 1;
-        else if (arr[mid] == num)
-            return mid;
-        else if (arr[mid] < num)
-            left = mid;
-        else
-            right = mid;
-
-        sleep(1);
-
-        mid_prev = mid;
-        mid = (left + right) / 2;
+    printf("[%d, ", arr[0]);
+    for (int i = 1; i < len - 1; i++) {
+        printf("%d, ", arr[i]);
     }
-    printf("\nleft: %d, right: %d\n", left, right);
-    return mid;
+    printf("%d]\n", arr[len - 1]);
 }

@@ -6,14 +6,14 @@
 #endif
 
 void print_array(int *arr, int len);
-void selection_sort(int *arr, int len);
+void quick_sort(int *arr, int low, int high);
 int  main() {
     int arr[ARR_LEN] = {23, 353, 6, -2, 0, 8, 678, -176, 3, 69};
 
     printf("Original array: ");
     print_array(arr, ARR_LEN);
 
-    selection_sort(arr, ARR_LEN);
+    quick_sort(arr, 0, ARR_LEN - 1);
 
     printf("Sorted array: ");
     print_array(arr, ARR_LEN);
@@ -38,20 +38,26 @@ void swap(int *a, int *b) {
     *b = temp;
 }
 
-void selection_sort(int *arr, int len) {
-    for (int i = 0; i < len - 1; i++) {
+int partition(int *arr, int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
 
-        int min_idx = i;
-        for (int j = i + 1; j < len; j++)
-            if (arr[j] < arr[min_idx])
-                min_idx = j;
+    for (int j = low; j < high; j++)
+        if (arr[j] < pivot)
+            swap(&arr[++i], &arr[j]);
 
-#ifdef DEBUG
-        printf("\ni=%1$d, arr[%1$d]=%2$d | min_idx=%3$d, arr[%3$d]=%4$d\n", i, arr[i],
-               min_idx, arr[min_idx]);
-        printf("swapping arr[i] with arr[min_idx]...\n");
-        sleep(0.5);
-#endif
-        swap(&arr[i], &arr[min_idx]);
-    }
+    swap(&arr[i + 1], &arr[high]);
+    #ifdef DEBUG
+    print_array(arr, ARR_LEN);
+    sleep(0.5);
+    #endif
+    return i + 1;
+}
+
+void quick_sort(int *arr, int low, int high) {
+    if (low < high) {
+        int part_idx = partition(arr, low, high);
+        quick_sort(arr, low, part_idx - 1);
+        quick_sort(arr, part_idx + 1, high);
+    }        
 }

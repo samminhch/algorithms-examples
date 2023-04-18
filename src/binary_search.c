@@ -1,4 +1,5 @@
 #include <stdio.h>
+#define ARR_LEN 100
 
 #ifdef DEBUG
 #include <unistd.h>
@@ -6,29 +7,32 @@
 
 void print_array(int *arr, int len);
 int  binary_search(int *, int, int);
-int  main()
-{
-    int len = 6;
-    int arr[] = {10, 17, 20, 28, 75, 86};
+int  main() {
+    int arr[ARR_LEN];
+
+    for (int i = 0; i < ARR_LEN; i++) {
+        arr[i] = i + 1;
+    }
 
     printf("Here is the array: ");
-    print_array(arr, len);
+    print_array(arr, ARR_LEN);
 
     printf("What value would you like to search for? ");
 
     int num;
     scanf("%d", &num);
 
-    int index = binary_search(arr, len, num);
+    int index = binary_search(arr, ARR_LEN, num);
 
     if (index == -1)
         printf("%d isn't in the array!\n", num);
     else
         printf("arr[%d] = %d\n", index, num);
+
+    return 0;
 }
 
-int binary_search(int *arr, int len, int num)
-{
+int binary_search(int *arr, int len, int num) {
     int left = 0;
     int right = len;
     int mid_prev = -1;
@@ -58,8 +62,7 @@ int binary_search(int *arr, int len, int num)
     return -1;
 }
 
-void print_array(int *arr, int len)
-{
+void print_array(int *arr, int len) {
     if (len < 1)
         return;
 

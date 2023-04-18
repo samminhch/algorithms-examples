@@ -28,6 +28,7 @@ clean()
     if [ -d "$build_directory" ];
     then
         rm -rf "$build_directory"
+        echo "Build clean succeeded"
     fi
 }
 

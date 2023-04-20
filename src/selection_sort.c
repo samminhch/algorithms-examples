@@ -46,12 +46,11 @@ void selection_sort(int *arr, int len) {
             if (arr[j] < arr[min_idx])
                 min_idx = j;
 
-#ifdef DEBUG
-        printf("\ni=%1$d, arr[%1$d]=%2$d | min_idx=%3$d, arr[%3$d]=%4$d\n", i, arr[i],
-               min_idx, arr[min_idx]);
-        printf("swapping arr[i] with arr[min_idx]...\n");
-        sleep(0.5);
-#endif
         swap(&arr[i], &arr[min_idx]);
+#ifdef DEBUG
+        printf("swap(&arr[%d], &arr[%d]) | ", i, min_idx);
+        print_array(arr, ARR_LEN);
+        sleep(1.5);
+#endif
     }
 }

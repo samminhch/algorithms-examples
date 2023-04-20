@@ -48,8 +48,9 @@ int partition(int *arr, int low, int high) {
 
     swap(&arr[i + 1], &arr[high]);
     #ifdef DEBUG
+    printf("pivot: arr[%d]=%-4d | ", high, arr[high]);
     print_array(arr, ARR_LEN);
-    sleep(0.5);
+    sleep(1.5);
     #endif
     return i + 1;
 }
